@@ -1,0 +1,54 @@
+/* Custom Smooth Transitions & Aesthetics */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0B192C 0%, #1E3E62 60%, #00ADB5 100%);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #00ADB5 0%, #38BDF8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            text-transform: capitalize;
+            text-wrap: balance;
+            text-align: left;
+        }
+
+        p {
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        .section-intro p {
+            text-align: left;
+        }
+
+        #apropos p {
+            text-align: left;
+            hyphens: none;
+        }
+
+        #mobile-menu-btn {
+            min-width: 44px;
+            min-height: 44px;
+        }
+
+        @media (max-width: 639px) {
+            h1 {
+                font-size: clamp(1.9rem, 8vw, 2.5rem);
+            }
+
+            #projets article {
+                min-width: 0;
+            }
+        }

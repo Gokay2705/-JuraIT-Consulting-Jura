@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JuraIT Consulting - Data Engineering pour les PME du Jura</title>
+    <meta name="description" content="JuraIT Consulting accompagne les PME du Jura en intégration de données, pipelines automatisés, reporting, plateformes cloud et qualité des données.">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="./tailwind.config.js"></script>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="bg-brand-grayBg text-slate-800 font-sans antialiased flex flex-col min-h-screen">
+
+    <!-- NAVIGATION BAR -->
+    <header class="sticky top-0 z-50 glass-card shadow-sm transition-all duration-300" id="main-header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" data-action="scroll-top">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-teal to-brand-slate flex items-center justify-center text-white font-bold text-xl shadow-md">
+                        J
+                    </div>
+                    <div>
+                        <span class="text-xl font-extrabold text-brand-navy tracking-tight">Jura<span class="text-brand-teal">IT</span></span>
+                        <span class="block text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Consulting Jura</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden xl:flex space-x-8 font-medium text-slate-700 text-sm">
+                    <a href="#accueil" class="hover:text-brand-teal transition-colors py-2" data-i18n="nav_home">Accueil</a>
+                    <a href="#services" class="hover:text-brand-teal transition-colors py-2" data-i18n="nav_services">Services</a>
+                    <a href="#projets" class="hover:text-brand-teal transition-colors py-2" data-i18n="nav_projects">Projets</a>
+                    <a href="#apropos" class="hover:text-brand-teal transition-colors py-2" data-i18n="nav_about">À Propos</a>
+                    <a href="#estimation" class="hover:text-brand-teal transition-colors py-2" data-i18n="nav_estimator">Estimateur</a>
+                    <a href="#contact" class="hover:text-brand-teal transition-colors py-2" data-i18n="nav_contact">Contact</a>
+                </nav>
+
+                <!-- Right Action Buttons & Language -->
+                <div class="hidden xl:flex items-center space-x-4">
+                    <!-- Language Selector Badge -->
+                    <div class="flex items-center bg-slate-100 rounded-lg p-1 text-xs font-semibold text-slate-600 border border-slate-200" id="lang-selector">
+                        <button data-language="fr" id="lang-btn-fr" class="lang-btn px-2 py-1 rounded shadow-xs bg-white text-brand-navy font-bold transition-all">FR</button>
+                        <button data-language="de" id="lang-btn-de" class="lang-btn px-2 py-1 rounded hover:text-brand-teal opacity-60 transition-all">DE</button>
+                        <button data-language="en" id="lang-btn-en" class="lang-btn px-2 py-1 rounded hover:text-brand-teal opacity-60 transition-all">EN</button>
+                    </div>
+                    <!-- CTA Button -->
+                    <a href="#rdv-section" class="bg-brand-teal hover:bg-teal-600 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-md transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                        <i class="fa-regular font-bold fa-calendar-check"></i>
+                        <span data-i18n="nav_book">Prendre RDV</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="xl:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-700 hover:text-brand-teal focus:outline-none p-2" aria-label="Menu Mobile">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden xl:hidden border-t border-slate-200 bg-white px-4 pt-2 pb-6 space-y-3">
+            <a href="#accueil" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-teal" data-i18n="nav_home">Accueil</a>
+            <a href="#services" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-teal" data-i18n="nav_services">Services</a>
+            <a href="#projets" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-teal" data-i18n="nav_projects">Projets</a>
+            <a href="#apropos" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-teal" data-i18n="nav_about">À Propos</a>
+            <a href="#estimation" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-teal" data-i18n="nav_estimator">Estimateur de Projets</a>
+            <a href="#contact" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-teal" data-i18n="nav_contact">Contact</a>
+            <div class="pt-2 flex flex-col gap-3">
+                <div class="flex justify-center space-x-3 text-xs font-semibold">
+                    <button data-language="fr" class="m-lang-btn px-3 py-1 rounded bg-brand-teal text-white">FR</button>
+                    <button data-language="de" class="m-lang-btn px-3 py-1 rounded bg-slate-100 text-slate-600">DE</button>
+                    <button data-language="en" class="m-lang-btn px-3 py-1 rounded bg-slate-100 text-slate-600">EN</button>
+                </div>
+                <a href="#rdv-section" class="mobile-link w-full text-center bg-brand-teal text-white font-semibold py-3 rounded-xl shadow-md" data-i18n="nav_book">
+                    Prendre RDV Gratuit
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="accueil" class="hero-gradient text-white py-20 lg:py-28 relative overflow-hidden">
+        <!-- Subtle background pattern -->
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <!-- Swiss Local Tag Badge -->
+                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-1.5 text-xs font-medium text-teal-200">
+                        <span class="w-2 h-2 rounded-full bg-brand-teal animate-ping"></span>
+                        <span data-i18n="hero_badge">Data Engineering pour les PME du Canton du Jura</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight" data-i18n="hero_title">
+                        Transformez vos données en décisions grâce à une infrastructure <span class="text-gradient">fiable</span>.
+                    </h1>
+
+                    <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed" data-i18n="hero_desc">
+                        Nous aidons les PME à connecter leurs données, automatiser leurs flux et construire des plateformes analytiques adaptées à leurs besoins.
+                    </p>
+
+                    <div class="pt-4 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#rdv-section" class="bg-brand-teal hover:bg-teal-500 text-white font-bold px-8 py-4 rounded-xl shadow-lg transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                            <span data-i18n="hero_btn_audit">Parlons de vos données</span>
+                            <i class="fa-solid fa-arrow-right text-sm"></i>
+                        </a>
+                        <a href="#services" class="bg-white/10 hover:bg-white/20 text-white font-semibold px-8 py-4 rounded-xl border border-white/20 backdrop-blur-sm transition-all flex items-center justify-center" data-i18n="hero_btn_services">
+                            Découvrir nos services
+                        </a>
+                    </div>
+
+                    <!-- Trust Stats -->
+                    <div class="pt-8 border-t border-white/10 grid grid-cols-3 gap-4 text-center lg:text-left">
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-extrabold text-brand-teal">4</div>
+                            <div class="text-xs text-slate-300" data-i18n="stat_lpd">Services data</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-extrabold text-white">PME</div>
+                            <div class="text-xs text-slate-300" data-i18n="stat_response">Solutions adaptées</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-extrabold text-brand-teal">A→Z</div>
+                            <div class="text-xs text-slate-300" data-i18n="stat_support">De l'intégration à l'analyse</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Graphic Illustration / Card -->
+                <div class="lg:col-span-5">
+                    <div class="relative mx-auto max-w-md">
+                        <div class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-brand-teal to-blue-500 blur-lg opacity-40"></div>
+                        <div class="relative bg-brand-navy border border-slate-700/80 rounded-2xl p-6 sm:p-8 shadow-2xl text-slate-200">
+                            <div class="flex justify-between items-center border-b border-slate-700 pb-4 mb-6">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                </div>
+                                <span class="text-xs font-mono text-slate-400">JuraIT Data Platform</span>
+                            </div>
+
+                            <div class="space-y-4">
+                                <div class="p-3 bg-slate-800/80 rounded-xl border border-slate-700/50 flex items-center justify-between">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fa-solid fa-shield-halved text-brand-teal text-xl"></i>
+                                        <div>
+                                            <div class="text-xs font-semibold text-white" data-i18n="shield_cyber">Intégration des données</div>
+                                                <div class="text-[11px] text-slate-400" data-i18n="shield_cyber_sub">Sources réunies au même endroit</div>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs bg-emerald-500/20 text-emerald-400 font-bold px-2 py-1 rounded" data-i18n="status_active">Connecté</span>
+                                </div>
+
+                                <div class="p-3 bg-slate-800/80 rounded-xl border border-slate-700/50 flex items-center justify-between">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fa-solid fa-cloud text-sky-400 text-xl"></i>
+                                        <div>
+                                            <div class="text-xs font-semibold text-white" data-i18n="shield_cloud">Pipelines automatisés</div>
+                                                <div class="text-[11px] text-slate-400" data-i18n="shield_cloud_sub">Des flux réguliers et fiables</div>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs bg-emerald-500/20 text-emerald-400 font-bold px-2 py-1 rounded" data-i18n="status_optimized">Automatisé</span>
+                                </div>
+
+                                <div class="p-3 bg-slate-800/80 rounded-xl border border-slate-700/50 flex items-center justify-between">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fa-solid fa-diagram-project text-purple-400 text-xl"></i>
+                                        <div>
+                                            <div class="text-xs font-semibold text-white" data-i18n="shield_si">Plateforme analytique</div>
+                                                <div class="text-[11px] text-slate-400" data-i18n="shield_si_sub">Entrepôt de données ou lakehouse</div>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs bg-brand-teal/20 text-brand-teal font-bold px-2 py-1 rounded" data-i18n="status_operational">Prêt à analyser</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 pt-4 border-t border-slate-700/60 text-center">
+                                <span class="text-xs text-slate-400"><i class="fa-solid fa-location-dot text-brand-teal mr-1"></i> <span data-i18n="location_tag">Basé dans le Canton du Jura (Delémont - Porrentruy - Saignelégier)</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="section-intro w-full mb-16">
+            <h2 class="text-xs uppercase font-extrabold tracking-widest text-brand-teal mb-3" data-i18n="services_subtitle">Data Engineering pour les PME</h2>
+            <p class="text-3xl sm:text-4xl font-extrabold text-brand-navy tracking-tight" data-i18n="services_title">Des données mieux intégrées, des décisions plus éclairées</p>
+            <p class="mt-4 text-slate-600 text-base" data-i18n="services_desc">De la connexion de vos outils à la création d'une plateforme analytique fiable, nous construisons une base de données utile à votre activité.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <!-- Service 1 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                <div>
+                    <div class="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center text-brand-teal text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-diagram-project"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-navy mb-3" data-i18n="s1_title">Intégration des sources de données</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4" data-i18n="s1_desc">
+                        Reliez vos outils de gestion, fichiers et bases de données pour obtenir une vue cohérente de votre activité.
+                    </p>
+                </div>
+                <button data-open-modal="service1" class="inline-flex items-center text-sm font-bold text-brand-teal hover:text-teal-700 group-hover:translate-x-1 transition-all pt-4 border-t border-slate-100">
+                    <span data-i18n="btn_learn_more">En savoir plus</span>
+                    <i class="fa-solid fa-arrow-right text-xs ml-2"></i>
+                </button>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                <div>
+                    <div class="w-14 h-14 bg-sky-50 rounded-2xl flex items-center justify-center text-sky-600 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-navy mb-3" data-i18n="s2_title">Pipelines de données & reporting</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4" data-i18n="s2_desc">
+                        Automatisez la collecte, la transformation et la livraison des données vers des rapports régulièrement actualisés.
+                    </p>
+                </div>
+                <button data-open-modal="service2" class="inline-flex items-center text-sm font-bold text-sky-600 hover:text-sky-800 group-hover:translate-x-1 transition-all pt-4 border-t border-slate-100">
+                    <span data-i18n="btn_learn_more">En savoir plus</span>
+                    <i class="fa-solid fa-arrow-right text-xs ml-2"></i>
+                </button>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                <div>
+                    <div class="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-cloud"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-navy mb-3" data-i18n="s3_title">Entrepôt de données & lakehouse</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4" data-i18n="s3_desc">
+                        Concevez un socle analytique cloud adapté à votre volume, à vos outils et à vos objectifs métier.
+                    </p>
+                </div>
+                <button data-open-modal="service3" class="inline-flex items-center text-sm font-bold text-indigo-600 hover:text-indigo-800 group-hover:translate-x-1 transition-all pt-4 border-t border-slate-100">
+                    <span data-i18n="btn_learn_more">En savoir plus</span>
+                    <i class="fa-solid fa-arrow-right text-xs ml-2"></i>
+                </button>
+            </div>
+
+            <!-- Service 4 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                <div>
+                    <div class="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-navy mb-3" data-i18n="s4_title">Qualité des données & processus</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4" data-i18n="s4_desc">
+                        Détectez les incohérences, fiabilisez vos indicateurs et simplifiez les tâches manuelles autour de vos données.
+                    </p>
+                </div>
+                <button data-open-modal="service4" class="inline-flex items-center text-sm font-bold text-emerald-600 hover:text-emerald-800 group-hover:translate-x-1 transition-all pt-4 border-t border-slate-100">
+                    <span data-i18n="btn_learn_more">En savoir plus</span>
+                    <i class="fa-solid fa-arrow-right text-xs ml-2"></i>
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projets" class="bg-slate-100 py-20 border-y border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="section-intro w-full mb-14">
+                <h2 class="text-xs uppercase font-extrabold tracking-widest text-brand-teal mb-3" data-i18n="projects_subtitle">Projets sélectionnés</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-brand-navy tracking-tight" data-i18n="projects_title">Des réalisations concrètes en data engineering</p>
+                <p class="mt-4 text-slate-600 text-base" data-i18n="projects_desc">Quelques exemples de pipelines cloud et d'analyses de données appliqués à des cas réels.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <article class="bg-white rounded-2xl p-7 sm:p-8 shadow-sm border border-slate-200">
+                    <div class="flex items-start justify-between gap-4 mb-5">
+                        <div class="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center text-brand-teal text-xl shrink-0">
+                            <i class="fa-solid fa-train"></i>
+                        </div>
+                        <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wide bg-amber-50 text-amber-700 px-3 py-1.5 rounded-full" data-i18n="project1_status">AWS Data Lakehouse</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-navy mb-3" data-i18n="project1_title">SBB Lakehouse — Data Engineering cloud sur AWS</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-5" data-i18n="project1_desc">Pipeline construit à partir de données publiques suisses de transport : ingestion quotidienne de 450 à 500 Mo de fichiers CSV depuis Open Transport Data Switzerland vers une couche bronze Amazon S3, avec AWS Lambda et transfert multipart en streaming.</p>
+                    <ul class="space-y-2 text-sm text-slate-600 mb-6">
+                        <li class="flex gap-2"><i class="fa-solid fa-check text-brand-teal mt-1"></i><span data-i18n="project1_detail1">Infrastructure cloud déployée avec Terraform et Infrastructure as Code.</span></li>
+                        <li class="flex gap-2"><i class="fa-solid fa-check text-brand-teal mt-1"></i><span data-i18n="project1_detail2">CI/CD GitHub Actions avec OIDC : plan Terraform sur les pull requests, apply après merge.</span></li>
+                        <li class="flex gap-2"><i class="fa-solid fa-check text-brand-teal mt-1"></i><span data-i18n="project1_detail3">Sécurité : rôles IAM au moindre privilège, hooks pre-commit, TFLint et scan Trivy.</span></li>
+                    </ul>
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg">AWS Lambda</span>
+                        <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg">Amazon S3</span>
+                        <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg">Terraform</span>
+                        <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg">GitHub Actions · OIDC</span>
+                    </div>
+                    <p class="text-xs text-slate-500 border-t border-slate-100 pt-4"><span class="font-bold text-brand-navy" data-i18n="project1_next_label">Architecture réalisée :</span> <span data-i18n="project1_next">Couches Bronze, Silver et Gold, complétées par une page interactive pour interroger les données.</span></p>
+                </article>
+
+                <article class="bg-white rounded-2xl p-7 sm:p-8 shadow-sm border border-slate-200">
+                    <div class="flex items-start justify-between gap-4 mb-5">
+                        <div class="w-12 h-12 bg-sky-50 rounded-xl flex items-center justify-center text-sky-600 text-xl shrink-0">
+                            <i class="fa-solid fa-chart-column"></i>
+                        </div>
+                        <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wide bg-sky-50 text-sky-700 px-3 py-1.5 rounded-full" data-i18n="project2_status">Analyse de données</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-navy mb-3" data-i18n="project2_title">Analyse du marché de l'emploi suisse</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-5" data-i18n="project2_desc">Projet data engineering de bout en bout sur 1 895 offres d'emploi suisses, avec des pipelines SQL construits dans DuckDB.</p>
+                    <ul class="space-y-2 text-sm text-slate-600 mb-6">
+                        <li class="flex gap-2"><i class="fa-solid fa-check text-brand-teal mt-1"></i><span data-i18n="project2_detail1">Préparation et analyse d'un jeu de données d'offres d'emploi.</span></li>
+                        <li class="flex gap-2"><i class="fa-solid fa-check text-brand-teal mt-1"></i><span data-i18n="project2_detail2">Validation statistique des résultats avec des intervalles de confiance.</span></li>
+                        <li class="flex gap-2"><i class="fa-solid fa-check text-brand-teal mt-1"></i><span data-i18n="project2_detail3">Visualisation de la répartition des offres par canton en Suisse.</span></li>
+                    </ul>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg">DuckDB</span>
+                        <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg">SQL</span>
+                        <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg" data-i18n="project2_tag_stats">Validation statistique</span>
+                    </div>
+                </article>
+
+                <article class="lg:col-span-2 bg-white rounded-2xl p-7 sm:p-8 shadow-sm border border-slate-200">
+                    <div class="flex items-start justify-between gap-4 mb-5">
+                        <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 text-xl shrink-0">
+                            <i class="fa-solid fa-box-archive"></i>
+                        </div>
+                        <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wide bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full" data-i18n="project3_status">Traitement 100 % local · hors ligne</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-navy mb-3" data-i18n="project3_title">PTT Offline Archival Metadata Pipeline</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6 max-w-5xl" data-i18n="project3_desc">Pipeline OCR et LLM entièrement local qui transforme des dossiers numérisés d'histoire postale suisse (fonds Post-199) en projets de métadonnées structurés pour le catalogage archivistique.</p>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-xs uppercase font-bold tracking-wider text-slate-400 mb-3" data-i18n="project3_pipeline_title">Flux de traitement</h4>
+                            <ul class="space-y-2 text-sm text-slate-600">
+                                <li class="flex gap-2"><i class="fa-solid fa-check text-brand-teal mt-1"></i><span data-i18n="project3_detail1">Convertit les PDF en images, classe les pages et applique l'OCR imprimé en allemand.</span></li>
+                                <li class="flex gap-2"><i class="fa-solid fa-check text-brand-teal mt-1"></i><span data-i18n="project3_detail2">Utilise un modèle vision-langage local pour décrire les pages contenant des images.</span></li>
+                                <li class="flex gap-2"><i class="fa-solid fa-check text-brand-teal mt-1"></i><span data-i18n="project3_detail3">Génère des brouillons JSON pour sept champs de métadonnées, avec une interface de révision et recherche plein texte.</span></li>
+                                <li class="flex gap-2"><i class="fa-solid fa-check text-brand-teal mt-1"></i><span data-i18n="project3_detail4">Applique les consignes archivistiques : pas de noms personnels dans « Form und Inhalt ».</span></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-xs uppercase font-bold tracking-wider text-slate-400 mb-3" data-i18n="project3_privacy_title">Confidentialité & contrôle</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-4" data-i18n="project3_privacy_desc">Fonctionne hors ligne sur Apple Silicon, sans API cloud ni LLM hébergé. Les données personnelles restent sur la machine locale, conformément à l'accord BGA. Les brouillons sont conçus pour être révisés avant le catalogage.</p>
+                            <p class="text-slate-600 text-sm leading-relaxed" data-i18n="project3_quality_desc">Le flux OCR utilise Tesseract comme solution de repli lorsque l'intégration Surya ne fonctionne pas avec l'API épinglée. La reconnaissance manuscrite est intégrée mais désactivée par défaut.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2 mt-6 pt-5 border-t border-slate-100">
+                        <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg">Python</span>
+                        <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg">Ollama · Qwen2.5-VL · Gemma 2</span>
+                        <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg">Tesseract · Surya</span>
+                        <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg">SQLite · FTS5</span>
+                        <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg">Streamlit</span>
+                        <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg" data-i18n="project3_htr_tag">Kraken / TrOCR · optionnel</span>
+                    </div>
+                </article>
+
+                <article class="lg:col-span-2 bg-white rounded-2xl p-7 sm:p-8 shadow-sm border border-slate-200">
+                    <div class="flex items-start justify-between gap-4 mb-5">
+                        <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center text-amber-600 text-xl shrink-0">
+                            <i class="fa-solid fa-solar-panel"></i>
+                        </div>
+                        <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wide bg-amber-50 text-amber-700 px-3 py-1.5 rounded-full" data-i18n="project4_status">Projet en cours · BFH / Inalp AG</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-navy mb-3" data-i18n="project4_title">Modern Energy Communities 2.0 (MEG2.0): Analysis & Billing</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6 max-w-5xl" data-i18n="project4_desc">Projet universitaire mené à la Haute école spécialisée bernoise (BFH), avec Inalp AG et sa plateforme InfraHub. Le projet étudie l'ingestion de télémétrie énergétique en temps réel et ses applications pour l'analyse et la facturation des communautés énergétiques suisses (ZEV, vZEV, LEG).</p>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-xs uppercase font-bold tracking-wider text-slate-400 mb-3" data-i18n="project4_arch_title">Architecture étudiée</h4>
+                            <ul class="space-y-2 text-sm text-slate-600">
+                                <li class="flex gap-2"><i class="fa-solid fa-check text-brand-teal mt-1"></i><span data-i18n="project4_detail1">Ingestion de mesures de compteurs et de télémétrie via MQTT/REST dans InfraHub.</span></li>
+                                <li class="flex gap-2"><i class="fa-solid fa-check text-brand-teal mt-1"></i><span data-i18n="project4_detail2">Traitement des séries temporelles et règles d'analyse pour estimer l'autoconsommation et répartir les coûts.</span></li>
+                                <li class="flex gap-2"><i class="fa-solid fa-check text-brand-teal mt-1"></i><span data-i18n="project4_detail3">Étude du déplacement flexible de charges, par exemple le chauffage d'un boiler pendant les pics de production solaire.</span></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-xs uppercase font-bold tracking-wider text-slate-400 mb-3" data-i18n="project4_scope_title">Objectif du projet</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed" data-i18n="project4_scope_desc">Évaluer si des données plus fraîches peuvent soutenir des décisions énergétiques plus réactives et contribuer à augmenter le taux d'autoconsommation. L'analyse et la facturation des modèles ZEV/vZEV/LEG font partie du périmètre étudié ; les bénéfices restent à valider dans le cadre du projet.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2 mt-6 pt-5 border-t border-slate-100">
+                        <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg">MQTT</span>
+                        <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg">REST</span>
+                        <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg">InfraHub</span>
+                        <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg" data-i18n="project4_tag_energy">IoT énergétique</span>
+                        <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg" data-i18n="project4_tag_billing">Analyse & facturation</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE CONSULTING ESTIMATOR TOOL -->
+    <section id="estimation" class="bg-slate-100 py-16 border-y border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-lg border border-slate-200">
+                <div class="section-intro w-full mb-10">
+                    <span class="bg-brand-teal/10 text-brand-teal text-xs font-bold px-3 py-1 rounded-full uppercase" data-i18n="est_badge">Estimateur indicatif</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-brand-navy mt-3" data-i18n="est_title">Évaluez votre projet data</h2>
+                    <p class="text-slate-600 text-sm mt-2" data-i18n="est_desc">Sélectionnez les besoins de votre PME pour obtenir un premier ordre de grandeur.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 items-start">
+                    <!-- Controls -->
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-bold text-brand-navy mb-2" data-i18n="est_size_label">1. Taille de votre entreprise</label>
+                            <select id="est-size" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-700 font-medium focus:ring-2 focus:ring-brand-teal focus:outline-none">
+                                <option value="1" data-i18n="est_opt_1">1 - 10 collaborateurs (TPE)</option>
+                                <option value="2" selected data-i18n="est_opt_2">11 - 50 collaborateurs (PME)</option>
+                                <option value="3" data-i18n="est_opt_3">51 - 250 collaborateurs (Moyenne entreprise)</option>
+                                <option value="4" data-i18n="est_opt_4">+250 collaborateurs (Grande structure)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-brand-navy mb-2" data-i18n="est_domain_label">2. Besoins prioritaires</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
+                                    <input type="checkbox" id="service-integration" checked class="w-5 h-5 text-brand-teal rounded focus:ring-brand-teal">
+                                    <span class="text-sm font-medium text-slate-700" data-i18n="est_chk_cyber">Intégration de sources de données</span>
+                                </label>
+                                <label class="flex items-center space-x-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
+                                    <input type="checkbox" id="service-pipelines" checked class="w-5 h-5 text-brand-teal rounded focus:ring-brand-teal">
+                                    <span class="text-sm font-medium text-slate-700" data-i18n="est_chk_cloud">Pipelines automatisés & reporting</span>
+                                </label>
+                                <label class="flex items-center space-x-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
+                                    <input type="checkbox" id="service-platform" class="w-5 h-5 text-brand-teal rounded focus:ring-brand-teal">
+                                    <span class="text-sm font-medium text-slate-700" data-i18n="est_chk_network">Entrepôt de données / lakehouse</span>
+                                </label>
+                                <label class="flex items-center space-x-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
+                                    <input type="checkbox" id="service-quality" class="w-5 h-5 text-brand-teal rounded focus:ring-brand-teal">
+                                    <span class="text-sm font-medium text-slate-700" data-i18n="est_chk_quality">Qualité des données & processus</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-brand-navy mb-2" data-i18n="est_urgency_label">3. Niveau d'urgence</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <button type="button" id="urgency-normal" data-urgency="normal" class="urgency-btn py-2.5 px-4 rounded-xl border border-brand-teal bg-brand-teal text-white font-medium text-sm transition-all" data-i18n="est_urg_normal">Normal (1-2 mois)</button>
+                                <button type="button" id="urgency-urgent" data-urgency="urgent" class="urgency-btn py-2.5 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 font-medium text-sm transition-all" data-i18n="est_urg_urgent">Urgent (&lt; 2 semaines)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Output Card -->
+                    <div class="bg-brand-navy text-white rounded-2xl p-6 sm:p-8 flex flex-col justify-between h-full relative overflow-hidden">
+                        <div class="space-y-4">
+                            <span class="text-xs uppercase tracking-widest text-brand-teal font-bold" data-i18n="est_card_tag">Estimation indicative</span>
+                            <div class="text-3xl sm:text-4xl font-extrabold text-white">
+                                CHF <span id="est-price">1'800</span> <span class="text-xs text-slate-400 font-normal" data-i18n="est_per_project">/ projet approx.</span>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed border-t border-slate-700 pt-4" data-i18n="est_includes">
+                                Cette estimation est indicative et varie selon vos sources, vos volumes de données et le périmètre du projet.
+                            </p>
+                            <ul class="text-xs space-y-2 text-slate-300">
+                                <li class="flex items-center"><i class="fa-solid fa-check text-brand-teal mr-2"></i> <span data-i18n="est_feat1">Périmètre adapté à votre PME</span></li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-brand-teal mr-2"></i> <span data-i18n="est_feat2">Priorité aux résultats métier mesurables</span></li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-brand-teal mr-2"></i> <span data-i18n="est_feat3">Proposition détaillée après échange</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-slate-700">
+                            <a href="#rdv-section" data-action="prefill-estimate" class="w-full bg-brand-teal hover:bg-teal-500 text-white font-bold py-3 px-4 rounded-xl text-center block transition-all" data-i18n="est_btn_quote">
+                                Valider et demander un devis exact
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="apropos" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-12 gap-12 items-center">
+            
+            <div class="lg:col-span-6 space-y-6">
+                <span class="text-xs uppercase font-extrabold tracking-widest text-brand-teal" data-i18n="about_tag">Data Engineering pour les PME</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-navy tracking-tight" data-i18n="about_title">
+                    Des fondations data fiables pour votre entreprise
+                </h2>
+                <p class="text-slate-600 leading-relaxed text-base" data-i18n="about_p1">
+                    <strong>JuraIT Consulting</strong> aide les PME à transformer des données dispersées en informations cohérentes et utiles aux décisions quotidiennes.
+                </p>
+                <p class="text-slate-600 leading-relaxed text-base" data-i18n="about_p2">
+                    Que vous soyez une PME industrielle, un cabinet médical, une fiduciaire ou une collectivité publique, nous adaptons nos recommandations à vos exigences sectorielles et aux réglementations suisses strictes en matière de sécurité des données (nLPD).
+                </p>
+
+                <div class="grid sm:grid-cols-2 gap-4 pt-4">
+                    <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs">
+                        <i class="fa-solid fa-location-dot text-brand-teal text-xl mb-2"></i>
+                        <h4 class="font-bold text-brand-navy text-sm" data-i18n="about_box1_t">Proximité Réelle</h4>
+                        <p class="text-xs text-slate-500 mt-1" data-i18n="about_box1_d">Interventions rapides sur site à Delémont, Porrentruy et Saignelégier.</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs">
+                        <i class="fa-solid fa-database text-brand-teal text-xl mb-2"></i>
+                        <h4 class="font-bold text-brand-navy text-sm" data-i18n="about_box2_t">Des données exploitables</h4>
+                        <p class="text-xs text-slate-500 mt-1" data-i18n="about_box2_d">Des flux documentés, des indicateurs cohérents et des fondations conçues pour évoluer.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Methodology Cards -->
+            <div class="lg:col-span-6 bg-slate-900 rounded-3xl p-8 text-white relative shadow-xl">
+                <h3 class="text-xl font-bold mb-6 text-brand-teal flex items-center gap-2">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span data-i18n="method_title">Notre Démarche en 4 Étapes</span>
+                </h3>
+
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="w-8 h-8 rounded-full bg-brand-teal/20 border border-brand-teal text-brand-teal font-bold flex items-center justify-center shrink-0">1</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-white" data-i18n="m1_t">Analyse & Diagnostic</h4>
+                            <p class="text-xs text-slate-400 mt-1" data-i18n="m1_d">Cartographie de l'existant, identification des vulnérabilités et écoute de vos enjeux métier.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="w-8 h-8 rounded-full bg-brand-teal/20 border border-brand-teal text-brand-teal font-bold flex items-center justify-center shrink-0">2</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-white" data-i18n="m2_t">Feuille de Route Stratégique</h4>
+                            <p class="text-xs text-slate-400 mt-1" data-i18n="m2_d">Élaboration d'un plan d'action budgétisé et priorisé pour votre infrastructure.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="w-8 h-8 rounded-full bg-brand-teal/20 border border-brand-teal text-brand-teal font-bold flex items-center justify-center shrink-0">3</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-white" data-i18n="m3_t">Mise en Œuvre & Intégration</h4>
+                            <p class="text-xs text-slate-400 mt-1" data-i18n="m3_d">Déploiement des solutions retenues sans interruption de vos activités quotidiennes.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="w-8 h-8 rounded-full bg-brand-teal/20 border border-brand-teal text-brand-teal font-bold flex items-center justify-center shrink-0">4</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-white" data-i18n="m4_t">Suivi Continu & Optimisation</h4>
+                            <p class="text-xs text-slate-400 mt-1" data-i18n="m4_d">Veille technologique et accompagnement régulier de vos équipes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- INTERACTIVE RDV & CONTACT SECTION -->
+    <section id="rdv-section" class="py-20 bg-slate-900 text-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="contact" class="section-intro w-full mb-16">
+                <span class="text-xs uppercase font-extrabold tracking-widest text-brand-teal" data-i18n="rdv_tag">Échange autour de votre projet data</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold mt-2" data-i18n="rdv_title">Parlons de vos données et de vos objectifs</h2>
+                <p class="text-slate-400 text-sm mt-3" data-i18n="rdv_desc">Choisissez un créneau ou envoyez-nous un message pour parler de vos besoins data.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- Interactive Schedule Picker / Mock Calendar -->
+                <div class="lg:col-span-5 bg-slate-800 p-6 sm:p-8 rounded-3xl border border-slate-700 shadow-xl">
+                    <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                        <i class="fa-regular fa-calendar-days text-brand-teal"></i>
+                        <span data-i18n="picker_title">Sélectionner un créneau (Visio ou Sur Site)</span>
+                    </h3>
+
+                    <!-- Day Selector -->
+                    <div class="grid grid-cols-4 gap-2 mb-6" id="day-selector">
+                        <button data-day="Jeu 15 Oct" class="day-btn py-3 rounded-xl border border-slate-700 bg-slate-900 text-center hover:border-brand-teal transition-all">
+                            <span class="block text-[10px] text-slate-400 uppercase">Jeu</span>
+                            <span class="block text-sm font-bold text-white">15 Oct</span>
+                        </button>
+                        <button data-day="Ven 16 Oct" class="day-btn py-3 rounded-xl border border-brand-teal bg-brand-teal/20 text-center transition-all">
+                            <span class="block text-[10px] text-brand-teal font-bold uppercase">Ven</span>
+                            <span class="block text-sm font-bold text-white">16 Oct</span>
+                        </button>
+                        <button data-day="Lun 19 Oct" class="day-btn py-3 rounded-xl border border-slate-700 bg-slate-900 text-center hover:border-brand-teal transition-all">
+                            <span class="block text-[10px] text-slate-400 uppercase">Lun</span>
+                            <span class="block text-sm font-bold text-white">19 Oct</span>
+                        </button>
+                        <button data-day="Mar 20 Oct" class="day-btn py-3 rounded-xl border border-slate-700 bg-slate-900 text-center hover:border-brand-teal transition-all">
+                            <span class="block text-[10px] text-slate-400 uppercase">Mar</span>
+                            <span class="block text-sm font-bold text-white">20 Oct</span>
+                        </button>
+                    </div>
+
+                    <!-- Time Slots -->
+                    <div class="space-y-2 mb-6">
+                        <label class="block text-xs font-semibold text-slate-400 mb-2" data-i18n="picker_hours">Heures disponibles :</label>
+                        <div class="grid grid-cols-3 gap-2" id="time-slots">
+                            <button data-time="09:00" class="time-btn py-2 rounded-lg border border-slate-700 bg-slate-900 text-xs font-medium text-slate-300 hover:border-brand-teal">09:00</button>
+                            <button data-time="10:30" class="time-btn py-2 rounded-lg border border-brand-teal bg-brand-teal text-xs font-bold text-white">10:30</button>
+                            <button data-time="14:00" class="time-btn py-2 rounded-lg border border-slate-700 bg-slate-900 text-xs font-medium text-slate-300 hover:border-brand-teal">14:00</button>
+                            <button data-time="15:30" class="time-btn py-2 rounded-lg border border-slate-700 bg-slate-900 text-xs font-medium text-slate-300 hover:border-brand-teal">15:30</button>
+                            <button data-time="16:45" class="time-btn py-2 rounded-lg border border-slate-700 bg-slate-900 text-xs font-medium text-slate-300 hover:border-brand-teal">16:45</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-700/60 text-xs space-y-1">
+                        <div class="flex justify-between text-slate-300">
+                            <span data-i18n="slot_selected_label">Créneau sélectionné :</span>
+                            <span id="selected-slot-text" class="font-bold text-brand-teal">Ven 16 Oct à 10:30</span>
+                        </div>
+                        <div class="text-slate-400 text-[11px]" data-i18n="slot_format_info">Format: Consultation en visioconférence ou à votre bureau.</div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="lg:col-span-7 bg-white text-slate-800 p-8 rounded-3xl shadow-xl">
+                    <form id="contact-form" class="space-y-4">
+                        <h3 class="text-xl font-bold text-brand-navy mb-4" data-i18n="form_title">Vos coordonnées</h3>
+
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="form_fullname">Nom & Prénom *</label>
+                                <input type="text" name="name" autocomplete="name" required placeholder="Jean Dupont" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-teal focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="form_email">E-mail professionnel *</label>
+                                <input type="email" name="email" autocomplete="email" required placeholder="j.dupont@entreprise.ch" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-teal focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="form_company">Nom de l'entreprise</label>
+                                <input type="text" name="company" autocomplete="organization" placeholder="Horlogerie Jura SA" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-teal focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="form_phone">Téléphone</label>
+                                <input type="tel" name="phone" autocomplete="tel" placeholder="+41 32 000 00 00" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-teal focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="form_message">Sujet principal / Message</label>
+                            <textarea id="contact-message" name="message" rows="3" placeholder="Décrivez brièvement vos attentes ou projets IT..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-teal focus:outline-none"></textarea>
+                        </div>
+
+                        <!-- Privacy Acceptance -->
+                        <div class="flex items-start space-x-2 pt-2">
+                            <input type="checkbox" name="privacy_consent" value="yes" required id="privacy" class="mt-1 w-4 h-4 text-brand-teal rounded">
+                            <label for="privacy" class="text-xs text-slate-500" data-i18n="form_privacy">
+                                J'accepte que mes données soient traitées conformément à la politique de confidentialité (Conforme nLPD Suisse).
+                            </label>
+                        </div>
+
+                        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden">
+                        <input type="hidden" name="_subject" value="New website contact request">
+                        <p class="text-xs text-slate-500" data-i18n="form_delivery_notice">Your message will be sent via FormSubmit to mstfgkcaydin@gmail.com.</p>
+                        <p id="form-error" class="hidden text-sm text-red-700" role="alert" data-i18n="form_error">The message could not be sent. Please try again or email us directly.</p>
+                        <button type="submit" class="w-full bg-brand-navy hover:bg-slate-800 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2 mt-4">
+                            <i class="fa-solid fa-paper-plane text-brand-teal"></i>
+                            <span data-i18n="form_submit">Confirmer la demande de rendez-vous</span>
+                        </button>
+                    </form>
+
+                    <!-- Success Message Container -->
+                    <div id="form-success" class="hidden bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl p-6 text-center space-y-2">
+                        <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto text-emerald-600 text-xl font-bold">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <h4 class="font-bold text-lg" data-i18n="success_title">Demande envoyée avec succès !</h4>
+                        <p class="text-xs text-emerald-700" data-i18n="success_msg">Votre message a bien été envoyé. Nous vous répondrons dès que possible.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Direct Contact Info Banner -->
+            <div class="mt-16 pt-10 border-t border-slate-800 grid md:grid-cols-3 gap-6 text-center md:text-left">
+                <div class="flex items-center justify-center md:justify-start space-x-4">
+                    <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-brand-teal">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <div class="text-xs">
+                        <div class="font-bold text-white" data-i18n="info_address_title">Adresse Principale</div>
+                        <div class="text-slate-400">Route de Bâle, 2800 Delémont, JU</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-center md:justify-start space-x-4">
+                    <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-brand-teal">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div class="text-xs">
+                        <div class="font-bold text-white" data-i18n="info_email_title">E-mail & Contact</div>
+                        <a class="text-slate-400 hover:text-brand-teal" href="mailto:mstfgkcaydin@gmail.com">mstfgkcaydin@gmail.com</a>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-center md:justify-start space-x-4">
+                    <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-brand-teal">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <div class="text-xs">
+                        <div class="font-bold text-white" data-i18n="info_phone_title">Téléphone Support</div>
+                        <div class="text-slate-400">+41 (0) 32 420 00 00</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-brand-navy border-t border-slate-800 text-slate-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8 text-xs">
+                
+                <div class="space-y-3">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 rounded-lg bg-brand-teal flex items-center justify-center text-white font-bold">J</div>
+                        <span class="text-lg font-bold text-white">JuraIT Consulting</span>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed" data-i18n="footer_desc">
+                        Société de conseil en informatique basée dans le Canton du Jura. Sécurité, Cloud et Modernisation du SI.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-3" data-i18n="nav_services">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#services" class="hover:text-brand-teal transition-colors" data-i18n="s1_title">Intégration des sources de données</a></li>
+                        <li><a href="#services" class="hover:text-brand-teal transition-colors" data-i18n="s2_title">Pipelines de données & reporting</a></li>
+                        <li><a href="#services" class="hover:text-brand-teal transition-colors" data-i18n="s3_title">Entrepôt de données & lakehouse</a></li>
+                        <li><a href="#services" class="hover:text-brand-teal transition-colors" data-i18n="s4_title">Qualité des données & processus</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-3" data-i18n="footer_zone_title">Zone d'Intervention</h4>
+                    <ul class="space-y-2">
+                        <li>Delémont & Vallons</li>
+                        <li>Porrentruy & Ajoie</li>
+                        <li>Saignelégier & Franches-Montagnes</li>
+                        <li>Jura Bernois & Bienne</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-3" data-i18n="footer_legal_title">Informations Légales</h4>
+                    <ul class="space-y-2">
+                        <li>Registre du Commerce: CH-JURA-RC</li>
+                        <li>TVA: CHE-123.456.789 TVA</li>
+                        <li><a href="#" class="hover:text-brand-teal transition-colors" data-i18n="footer_privacy">Politique de Confidentialité</a></li>
+                        <li><a href="#" class="hover:text-brand-teal transition-colors" data-i18n="footer_terms">Mentions Légales</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500">
+                <div>&copy; 2026 JuraIT Consulting Sàrl. Tous droits réservés.</div>
+                <div class="mt-4 sm:mt-0 flex space-x-4">
+                    <a href="#" class="hover:text-brand-teal"><i class="fa-brands fa-linkedin text-base"></i></a>
+                    <a href="#" class="hover:text-brand-teal"><i class="fa-brands fa-github text-base"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SERVICE MODAL CONTAINER -->
+    <div id="service-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 relative shadow-2xl animate-fade-in">
+            <button data-action="close-modal" class="absolute top-4 right-4 w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center text-slate-500 hover:text-slate-800">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modal-content">
+                <!-- Content injected via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script src="./script.js"></script>
+</body>
+</html>
