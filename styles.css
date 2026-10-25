@@ -93,8 +93,9 @@
 }
 .signature-contact {
     display: flex;
-    flex-wrap: wrap;
-    gap: .65rem 1.15rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .65rem;
     margin: 0;
     padding: 0;
     list-style: none;
