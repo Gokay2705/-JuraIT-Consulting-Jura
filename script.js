@@ -843,15 +843,14 @@
             const form = document.getElementById('contact-form');
             const email = form.elements.email.value.trim();
             const selectedAppointment = getSelectedAppointment();
-            const signatureText = {
-                fr: ['Data Engineering pour les PME', 'E-mail', 'Téléphone', 'Web', 'Des données fiables. Des décisions plus claires.'],
-                de: ['Data Engineering für KMU', 'E-Mail', 'Telefon', 'Web', 'Zuverlässige Daten. Klarere Entscheidungen.'],
-                en: ['Data Engineering for SMEs', 'E-mail', 'Phone', 'Web', 'Reliable data. Clearer decisions.']
+            const signature = {
+                fr: 'JURAIT CONSULTING | Data Engineering pour les PME | E-mail: mustafa@jurait.ch | Téléphone: +41 77 976 2663 | Web: https://jurait.ch/',
+                de: 'JURAIT CONSULTING | Data Engineering für KMU | E-Mail: mustafa@jurait.ch | Telefon: +41 77 976 2663 | Web: https://jurait.ch/',
+                en: 'JURAIT CONSULTING | Data Engineering for SMEs | E-mail: mustafa@jurait.ch | Phone: +41 77 976 2663 | Web: https://jurait.ch/'
             }[currentLang];
-            const signature = `<br><br><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:700px;border-collapse:collapse;font-family:Arial,sans-serif;color:#334155"><tr><td colspan="2" style="border-top:1px solid #d1d5db;height:14px;font-size:0;line-height:0">&nbsp;</td></tr><tr><td style="vertical-align:top;padding:0 18px 12px 0"><strong style="font-size:20px;letter-spacing:.4px;color:#111827">JURAIT CONSULTING</strong><br><span style="display:inline-block;padding-top:8px;font-size:16px">${signatureText[0]}</span><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:14px;font-size:16px;line-height:1.8"><tr><td style="padding-right:24px">${signatureText[1]}</td><td><a href="mailto:support@jurait.ch" style="color:#2563eb;text-decoration:none">support@jurait.ch</a></td></tr><tr><td style="padding-right:24px">${signatureText[2]}</td><td><a href="tel:+41779762663" style="color:#2563eb;text-decoration:none">+41 77 976 2663</a></td></tr><tr><td style="padding-right:24px">${signatureText[3]}</td><td><a href="https://www.jurait.ch" style="color:#2563eb;text-decoration:none">www.jurait.ch</a></td></tr></table></td><td style="width:130px;vertical-align:middle;text-align:right"><img src="https://www.jurait.ch/assets/profile.jpg" width="120" height="120" alt="Mustafa" style="display:block;width:120px;height:120px;border:3px solid #00aeb5;border-radius:50%;object-fit:cover"></td></tr><tr><td colspan="2" style="border-top:1px solid #d1d5db;padding-top:12px;font-size:15px">${signatureText[4]}</td></tr></table>`;
 
             form.elements._replyto.value = email;
-            form.elements._autoresponse.value = `${i18n[currentLang].success_msg}${signature}`;
+            form.elements._autoresponse.value = `${i18n[currentLang].success_msg}\n\n${signature}`;
             form.elements._next.value = `https://www.jurait.ch/?submitted=${encodeURIComponent(currentLang)}#rdv-section`;
 
             if (selectedAppointment) {
