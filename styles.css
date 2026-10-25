@@ -116,18 +116,23 @@
     align-items: center;
     gap: .9rem;
 }
-.signature-seal {
-    display: grid;
-    width: 5.25rem;
-    height: 5.25rem;
-    place-items: center;
+.signature-portrait {
+    width: 7rem;
+    height: 7rem;
+    overflow: hidden;
     border: 4px solid #ccfbf1;
     border-radius: 50%;
-    background: linear-gradient(145deg, #0f8b8d, #0b192c);
+    background: #e2e8f0;
     box-shadow: 0 8px 20px rgba(15, 139, 141, .2);
-    color: #fff;
 }
-.signature-seal span { font-size: 2rem; font-weight: 800; }
+.signature-portrait img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 38%;
+    transform: scale(1.03);
+}
 .signature-cta {
     display: inline-flex;
     align-items: center;
