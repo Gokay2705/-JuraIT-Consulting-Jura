@@ -138,7 +138,7 @@
                 form_submit: "Confirmer la demande de rendez-vous",
                 form_sending: "Envoi en cours…",
                 form_error: "L'envoi a échoué. Réessayez ou écrivez-nous directement par e-mail.",
-                form_delivery_notice: "Votre message sera transmis via FormSubmit à mstfgkcaydin@gmail.com.",
+                form_delivery_notice: "Votre message sera transmis via FormSubmit à mustafa@jurait.ch.",
                 success_title: "Demande envoyée avec succès !",
                 success_msg: "Votre message a bien été envoyé. Nous vous répondrons dès que possible.",
                 info_address_title: "Adresse Principale",
@@ -292,7 +292,7 @@
                 form_submit: "Terminanfrage Bestätigen",
                 form_sending: "Wird gesendet…",
                 form_error: "Die Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder schreiben Sie uns direkt per E-Mail.",
-                form_delivery_notice: "Ihre Nachricht wird über FormSubmit an mstfgkcaydin@gmail.com gesendet.",
+                form_delivery_notice: "Ihre Nachricht wird über FormSubmit an mustafa@jurait.ch gesendet.",
                 success_title: "Anfrage erfolgreich gesendet!",
                 success_msg: "Ihre Nachricht wurde gesendet. Wir melden uns so bald wie möglich.",
                 info_address_title: "Hauptadresse",
@@ -446,7 +446,7 @@
                 form_submit: "Confirm Appointment Request",
                 form_sending: "Sending…",
                 form_error: "The message could not be sent. Please try again or email us directly.",
-                form_delivery_notice: "Your message will be sent via FormSubmit to mstfgkcaydin@gmail.com.",
+                form_delivery_notice: "Your message will be sent via FormSubmit to mustafa@jurait.ch.",
                 success_title: "Request Sent Successfully!",
                 success_msg: "Your message has been sent. We will get back to you as soon as possible.",
                 info_address_title: "Main Office Address",
@@ -754,7 +754,7 @@
             submitLabel.textContent = i18n[currentLang].form_sending;
 
             try {
-                const response = await fetch('https://formsubmit.co/ajax/mstfgkcaydin@gmail.com', {
+                const response = await fetch('https://formsubmit.co/ajax/mustafa@jurait.ch', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
