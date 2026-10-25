@@ -606,7 +606,7 @@
 
                 <!-- Contact Form -->
                 <div class="lg:col-span-7 bg-white text-slate-800 p-8 rounded-3xl shadow-xl">
-                    <form id="contact-form" class="space-y-4">
+                    <form id="contact-form" action="https://formsubmit.co/info@jurait.ch" method="POST" class="space-y-4">
                         <h3 class="text-xl font-bold text-brand-navy mb-4" data-i18n="form_title">Vos coordonnées</h3>
 
                         <div class="grid sm:grid-cols-2 gap-4">
@@ -646,8 +646,12 @@
 
                         <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden">
                         <input type="hidden" name="_subject" value="New website contact request">
-                        <p class="text-xs text-slate-500" data-i18n="form_delivery_notice">Your message will be sent via FormSubmit to mustafa@jurait.ch.</p>
-                        <p id="form-error" class="hidden text-sm text-red-700" role="alert" data-i18n="form_error">The message could not be sent. Please try again or email us directly.</p>
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" id="form-replyto" name="_replyto" value="">
+                        <input type="hidden" id="form-autoresponse" name="_autoresponse" value="Merci pour votre message. Nous vous contacterons dans les plus brefs délais.">
+                        <input type="hidden" id="form-next" name="_next" value="https://www.jurait.ch/?submitted=1&amp;lang=fr#contact">
+                        <input type="hidden" id="selected-appointment" name="selected_appointment" value="">
+                        <p class="text-xs text-slate-500" data-i18n="form_delivery_notice">Your message will be sent to info@jurait.ch.</p>
                         <button type="submit" class="w-full bg-brand-navy hover:bg-slate-800 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2 mt-4">
                             <i class="fa-solid fa-paper-plane text-brand-teal"></i>
                             <span data-i18n="form_submit">Confirmer la demande de rendez-vous</span>
@@ -660,7 +664,7 @@
                             <i class="fa-solid fa-check"></i>
                         </div>
                         <h4 class="font-bold text-lg" data-i18n="success_title">Demande envoyée avec succès !</h4>
-                        <p class="text-xs text-emerald-700" data-i18n="success_msg">Votre message a bien été envoyé. Nous vous répondrons dès que possible.</p>
+                        <p class="text-xs text-emerald-700" data-i18n="success_msg">Merci pour votre message. Nous vous contacterons dans les plus brefs délais.</p>
                     </div>
                 </div>
 
@@ -684,7 +688,7 @@
                     </div>
                     <div class="text-xs">
                         <div class="font-bold text-white" data-i18n="info_email_title">E-mail & Contact</div>
-                        <a class="text-slate-400 hover:text-brand-teal" href="mailto:mustafa@jurait.ch">mustafa@jurait.ch</a>
+                        <a class="text-slate-400 hover:text-brand-teal" href="mailto:info@jurait.ch">info@jurait.ch</a>
                     </div>
                 </div>
 
@@ -695,6 +699,7 @@
                     <div class="text-xs">
                         <div class="font-bold text-white" data-i18n="info_phone_title">Téléphone Support</div>
                         <div class="text-slate-400">+41 77 976 2663</div>
+                        <a class="block text-slate-400 hover:text-brand-teal mt-1" href="mailto:support@jurait.ch">support@jurait.ch</a>
                     </div>
                 </div>
             </div>
@@ -711,7 +716,8 @@
                     <h2 id="signature-name" class="signature-name">JuraIT Consulting</h2>
                     <p class="signature-role" data-i18n="signature_role">Data Engineering pour les PME</p>
                     <ul class="signature-contact" aria-label="Coordonnées">
-                        <li><a class="signature-link" href="mailto:mustafa@jurait.ch"><i class="fa-regular fa-envelope" aria-hidden="true"></i><span>mustafa@jurait.ch</span></a></li>
+                                                <li><a class="signature-link" href="mailto:info@jurait.ch"><i class="fa-regular fa-envelope" aria-hidden="true"></i><span>info@jurait.ch</span></a></li>
+                        <li><a class="signature-link" href="mailto:support@jurait.ch"><i class="fa-regular fa-envelope" aria-hidden="true"></i><span>support@jurait.ch</span></a></li>
                         <li><a class="signature-link" href="tel:+41779762663"><i class="fa-solid fa-phone" aria-hidden="true"></i><span>+41 77 976 2663</span></a></li>
                         <li><a class="signature-link" href="https://jurait.ch"><i class="fa-solid fa-globe" aria-hidden="true"></i><span>www.jurait.ch</span></a></li>
                     </ul>

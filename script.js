@@ -138,9 +138,9 @@
                 form_submit: "Confirmer la demande de rendez-vous",
                 form_sending: "Envoi en cours…",
                 form_error: "L'envoi a échoué. Réessayez ou écrivez-nous directement par e-mail.",
-                form_delivery_notice: "Votre message sera transmis via FormSubmit à mustafa@jurait.ch.",
+                form_delivery_notice: "Votre message sera envoyé à info@jurait.ch.",
                 success_title: "Demande envoyée avec succès !",
-                success_msg: "Votre message a bien été envoyé. Nous vous répondrons dès que possible.",
+                success_msg: "Merci pour votre message. Nous vous contacterons dans les plus brefs délais.",
                 info_address_title: "Adresse Principale",
                 info_email_title: "E-mail & Contact",
                 info_phone_title: "Téléphone Support",
@@ -292,9 +292,9 @@
                 form_submit: "Terminanfrage Bestätigen",
                 form_sending: "Wird gesendet…",
                 form_error: "Die Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder schreiben Sie uns direkt per E-Mail.",
-                form_delivery_notice: "Ihre Nachricht wird über FormSubmit an mustafa@jurait.ch gesendet.",
+                form_delivery_notice: "Ihre Nachricht wird an info@jurait.ch gesendet.",
                 success_title: "Anfrage erfolgreich gesendet!",
-                success_msg: "Ihre Nachricht wurde gesendet. Wir melden uns so bald wie möglich.",
+                success_msg: "Vielen Dank für Ihre Nachricht. Wir werden uns so bald wie möglich bei Ihnen melden.",
                 info_address_title: "Hauptadresse",
                 info_email_title: "E-Mail & Kontakt",
                 info_phone_title: "Support Telefon",
@@ -446,9 +446,9 @@
                 form_submit: "Confirm Appointment Request",
                 form_sending: "Sending…",
                 form_error: "The message could not be sent. Please try again or email us directly.",
-                form_delivery_notice: "Your message will be sent via FormSubmit to mustafa@jurait.ch.",
+                form_delivery_notice: "Your message will be sent to info@jurait.ch.",
                 success_title: "Request Sent Successfully!",
-                success_msg: "Your message has been sent. We will get back to you as soon as possible.",
+                success_msg: "Thank you for your message. We will contact you shortly."
                 info_address_title: "Main Office Address",
                 info_email_title: "Email & Contact",
                 info_phone_title: "Support Hotline",
@@ -825,50 +825,42 @@
             selectedSlot.textContent = `${selectedDay} ${connector} ${selectedTime}`;
         }
 
-        // Contact Form Submission Handler
-        async function handleFormSubmit(e) {
-            e.preventDefault();
+        // Prepare the native FormSubmit POST with language-specific confirmation.
+        function prepareFormSubmission() {
             const form = document.getElementById('contact-form');
-            const successBox = document.getElementById('form-success');
-            const errorMessage = document.getElementById('form-error');
-            const submitButton = form.querySelector('[type="submit"]');
-            const submitLabel = submitButton.querySelector('[data-i18n="form_submit"]');
-            const submitText = submitLabel.textContent;
-            const formData = new URLSearchParams(new FormData(form));
-            formData.set('_replyto', formData.get('email'));
-            formData.set('_template', 'table');
-            formData.set('selected_appointment', document.getElementById('selected-slot-text').textContent);
+            const email = form.querySelector('[name="email"]').value;
+            const autoresponses = {
+                fr: "Merci pour votre message. Nous vous contacterons dans les plus brefs délais.",
+                de: "Vielen Dank für Ihre Nachricht. Wir werden uns so bald wie möglich bei Ihnen melden.",
+                en: "Thank you for your message. We will contact you shortly."
+            };
 
-            errorMessage.classList.add('hidden');
-            submitButton.disabled = true;
-            submitLabel.textContent = i18n[currentLang].form_sending;
+            form.querySelector('[name="_replyto"]').value = email;
+            form.querySelector('[name="_autoresponse"]').value = autoresponses[currentLang] || autoresponses.fr;
+            form.querySelector('[name="selected_appointment"]').value = document.getElementById('selected-slot-text').textContent;
 
-            try {
-                const response = await fetch('https://formsubmit.co/ajax/mustafa@jurait.ch', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Accept': 'application/json'
-                    },
-                    body: formData.toString()
-                });
-                const result = await response.json();
-
-                if (!response.ok || result.success !== 'true' && result.success !== true) {
-                    throw new Error(result.message || `Form submission failed (${response.status})`);
-                }
-
-                form.classList.add('hidden');
-                successBox.classList.remove('hidden');
-            } catch (error) {
-                console.error('Contact form submission failed:', error);
-                errorMessage.classList.remove('hidden');
-            } finally {
-                submitButton.disabled = false;
-                submitLabel.textContent = submitText;
-            }
+            const returnUrl = new URL('https://www.jurait.ch/');
+            returnUrl.searchParams.set('submitted', '1');
+            returnUrl.searchParams.set('lang', currentLang);
+            returnUrl.hash = 'contact';
+            form.querySelector('[name="_next"]').value = returnUrl.toString();
         }
 
+        function showReturnedSubmissionSuccess() {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('submitted') !== '1') return;
+
+            const submittedLanguage = params.get('lang');
+            if (i18n[submittedLanguage]) changeLanguage(submittedLanguage);
+
+            document.getElementById('contact-form').classList.add('hidden');
+            document.getElementById('form-success').classList.remove('hidden');
+
+            const cleanUrl = new URL(window.location.href);
+            cleanUrl.searchParams.delete('submitted');
+            cleanUrl.searchParams.delete('lang');
+            window.history.replaceState({}, document.title, cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
+        }
         document.addEventListener('click', (event) => {
             const target = event.target.closest('[data-language], [data-open-modal], [data-urgency], [data-day], [data-time], [data-action]');
             if (!target) return;
@@ -901,10 +893,11 @@
             }
         });
 
-        document.getElementById('contact-form').addEventListener('submit', handleFormSubmit);
+        document.getElementById('contact-form').addEventListener('submit', prepareFormSubmission);
 
         // Initialize the booking dates and calculation on page load
         window.onload = function() {
             renderDaySelector();
             calculateEstimate();
+            showReturnedSubmissionSuccess();
         };
