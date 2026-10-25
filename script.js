@@ -586,14 +586,108 @@
                 }
             });
 
-            // Re-calculate estimate text and update day slot text
+            // Re-calculate estimate text and refresh the localized booking dates
             calculateEstimate();
-            updateSlotText();
+            renderDaySelector();
         }
 
-        // State variables for booking picker
-        let selectedDay = 'Ven 16 Oct';
+        // Booking dates are generated from the Europe/Zurich calendar.
+        let selectedDate = null;
+        let selectedDay = '';
         let selectedTime = '10:30';
+
+        const bookingLocales = { fr: 'fr-CH', de: 'de-CH', en: 'en-GB' };
+
+        function getTodayInZurich() {
+            const parts = new Intl.DateTimeFormat('en-CA', {
+                timeZone: 'Europe/Zurich',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            }).formatToParts(new Date());
+            const values = {};
+            parts.forEach(part => { values[part.type] = part.value; });
+            return new Date(Date.UTC(Number(values.year), Number(values.month) - 1, Number(values.day)));
+        }
+
+        function getUpcomingBusinessDays(count = 4) {
+            const date = getTodayInZurich();
+            const dates = [];
+            date.setUTCDate(date.getUTCDate() + 1);
+            while (dates.length < count) {
+                const weekday = date.getUTCDay();
+                if (weekday !== 0 && weekday !== 6) dates.push(new Date(date.getTime()));
+                date.setUTCDate(date.getUTCDate() + 1);
+            }
+            return dates;
+        }
+
+        function dateToKey(date) {
+            return date.toISOString().slice(0, 10);
+        }
+
+        function dateFromKey(key) {
+            const [year, month, day] = key.split('-').map(Number);
+            return new Date(Date.UTC(year, month - 1, day));
+        }
+
+        function formatBookingDate(date, options) {
+            return new Intl.DateTimeFormat(bookingLocales[currentLang] || 'fr-CH', {
+                ...options,
+                timeZone: 'UTC'
+            }).format(date);
+        }
+
+        function renderDaySelector() {
+            const selector = document.getElementById('day-selector');
+            if (!selector) return;
+
+            const dates = getUpcomingBusinessDays();
+            const selectedKey = selectedDate ? dateToKey(selectedDate) : '';
+            if (!dates.some(date => dateToKey(date) === selectedKey)) selectedDate = dates[0];
+
+            selectedDay = formatBookingDate(selectedDate, {
+                weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
+            });
+            selector.innerHTML = '';
+
+            dates.forEach(date => {
+                const key = dateToKey(date);
+                const isSelected = key === dateToKey(selectedDate);
+                const weekdayLabel = formatBookingDate(date, { weekday: 'short' })
+                    .replace(/\\.$/, '')
+                    .toLocaleUpperCase(bookingLocales[currentLang] || 'fr-CH');
+                const dateLabel = formatBookingDate(date, { day: 'numeric', month: 'short' });
+                const fullDateLabel = formatBookingDate(date, {
+                    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+                });
+
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.dataset.day = key;
+                button.setAttribute('aria-label', fullDateLabel);
+                button.setAttribute('aria-pressed', String(isSelected));
+                button.className = isSelected
+                    ? 'day-btn py-3 rounded-xl border border-brand-teal bg-brand-teal/20 text-center transition-all'
+                    : 'day-btn py-3 rounded-xl border border-slate-700 bg-slate-900 text-center hover:border-brand-teal transition-all';
+
+                const weekdaySpan = document.createElement('span');
+                weekdaySpan.className = isSelected
+                    ? 'block text-[10px] text-brand-teal font-bold uppercase'
+                    : 'block text-[10px] text-slate-400 uppercase';
+                weekdaySpan.textContent = weekdayLabel;
+
+                const dateSpan = document.createElement('span');
+                dateSpan.className = 'block text-sm font-bold text-white';
+                dateSpan.textContent = dateLabel;
+
+                button.appendChild(weekdaySpan);
+                button.appendChild(dateSpan);
+                selector.appendChild(button);
+            });
+
+            updateSlotText();
+        }
 
         // Urgency state for estimator
         let currentUrgency = 'normal';
@@ -709,16 +803,9 @@
         }
 
         // Calendar Slot Selection Logic
-        function selectDay(btn, dayText) {
-            document.querySelectorAll('.day-btn').forEach(b => {
-                b.className = "day-btn py-3 rounded-xl border border-slate-700 bg-slate-900 text-center hover:border-brand-teal transition-all";
-                b.querySelector('span').className = "block text-[10px] text-slate-400 uppercase";
-            });
-            btn.className = "day-btn py-3 rounded-xl border border-brand-teal bg-brand-teal/20 text-center transition-all";
-            btn.querySelector('span').className = "block text-[10px] text-brand-teal font-bold uppercase";
-
-            selectedDay = dayText;
-            updateSlotText();
+        function selectDay(dateKey) {
+            selectedDate = dateFromKey(dateKey);
+            renderDaySelector();
         }
 
         function selectTime(btn, timeText) {
@@ -732,7 +819,10 @@
         }
 
         function updateSlotText() {
-            document.getElementById('selected-slot-text').innerText = `${selectedDay} - ${selectedTime}`;
+            const selectedSlot = document.getElementById('selected-slot-text');
+            if (!selectedSlot || !selectedDay) return;
+            const connector = { fr: 'à', de: 'um', en: 'at' }[currentLang] || 'à';
+            selectedSlot.textContent = `${selectedDay} ${connector} ${selectedTime}`;
         }
 
         // Contact Form Submission Handler
@@ -747,7 +837,7 @@
             const formData = new URLSearchParams(new FormData(form));
             formData.set('_replyto', formData.get('email'));
             formData.set('_template', 'table');
-            formData.set('selected_appointment', `${selectedDay} - ${selectedTime}`);
+            formData.set('selected_appointment', document.getElementById('selected-slot-text').textContent);
 
             errorMessage.classList.add('hidden');
             submitButton.disabled = true;
@@ -790,7 +880,7 @@
             } else if (target.dataset.urgency) {
                 setUrgency(target.dataset.urgency);
             } else if (target.dataset.day) {
-                selectDay(target, target.dataset.day);
+                selectDay(target.dataset.day);
             } else if (target.dataset.time) {
                 selectTime(target, target.dataset.time);
             } else if (target.dataset.action === 'scroll-top') {
@@ -813,7 +903,8 @@
 
         document.getElementById('contact-form').addEventListener('submit', handleFormSubmit);
 
-        // Initialize calculation on page load
+        // Initialize the booking dates and calculation on page load
         window.onload = function() {
+            renderDaySelector();
             calculateEstimate();
         };
