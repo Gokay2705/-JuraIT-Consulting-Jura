@@ -448,7 +448,7 @@
                 form_error: "The message could not be sent. Please try again or email us directly.",
                 form_delivery_notice: "Your message will be sent to mustafa@jurait.ch.",
                 success_title: "Request Sent Successfully!",
-                success_msg: "Thank you for your message. We will contact you shortly."
+                success_msg: "Thank you for your message. We will contact you shortly.",
                 info_address_title: "Main Office Address",
                 info_email_title: "Email & Contact",
                 info_phone_title: "Support Hotline",
@@ -574,15 +574,19 @@
                 }
             });
 
-            // Update language selector active styling
-            ['fr', 'de', 'en'].forEach(l => {
-                const btn = document.getElementById(`lang-btn-${l}`);
-                if (btn) {
-                    if (l === lang) {
-                        btn.className = "lang-btn px-2 py-1 rounded shadow-xs bg-white text-brand-navy font-bold transition-all";
-                    } else {
-                        btn.className = "lang-btn px-2 py-1 rounded hover:text-brand-teal opacity-60 transition-all";
-                    }
+            // Keep desktop and mobile language controls in sync.
+            document.querySelectorAll('[data-language]').forEach(btn => {
+                const isActive = btn.dataset.language === lang;
+                btn.setAttribute('aria-pressed', String(isActive));
+
+                if (btn.classList.contains('m-lang-btn')) {
+                    btn.className = isActive
+                        ? 'm-lang-btn px-3 py-1 rounded bg-brand-teal text-white'
+                        : 'm-lang-btn px-3 py-1 rounded bg-slate-100 text-slate-600';
+                } else {
+                    btn.className = isActive
+                        ? 'lang-btn px-2 py-1 rounded shadow-xs bg-white text-brand-navy font-bold transition-all'
+                        : 'lang-btn px-2 py-1 rounded hover:text-brand-teal opacity-60 transition-all';
                 }
             });
 
@@ -810,19 +814,27 @@
 
         function selectTime(btn, timeText) {
             document.querySelectorAll('.time-btn').forEach(b => {
-                b.className = "time-btn py-2 rounded-lg border border-slate-700 bg-slate-900 text-xs font-medium text-slate-300 hover:border-brand-teal";
+                b.type = 'button';
+                b.setAttribute('aria-pressed', String(b === btn));
+                b.className = b === btn
+                    ? 'time-btn py-2 rounded-lg border border-brand-teal bg-brand-teal text-xs font-bold text-white'
+                    : 'time-btn py-2 rounded-lg border border-slate-700 bg-slate-900 text-xs font-medium text-slate-300 hover:border-brand-teal';
             });
-            btn.className = "time-btn py-2 rounded-lg border border-brand-teal bg-brand-teal text-xs font-bold text-white";
 
             selectedTime = timeText;
             updateSlotText();
         }
 
+        function getSelectedAppointment() {
+            if (!selectedDay || !selectedTime) return '';
+            const connector = { fr: 'à', de: 'um', en: 'at' }[currentLang] || 'à';
+            return `${selectedDay} ${connector} ${selectedTime}`;
+        }
+
         function updateSlotText() {
             const selectedSlot = document.getElementById('selected-slot-text');
-            if (!selectedSlot || !selectedDay) return;
-            const connector = { fr: 'à', de: 'um', en: 'at' }[currentLang] || 'à';
-            selectedSlot.textContent = `${selectedDay} ${connector} ${selectedTime}`;
+            if (!selectedSlot) return;
+            selectedSlot.textContent = getSelectedAppointment() || '—';
         }
 
         // Contact Form Submission Handler
@@ -837,7 +849,12 @@
             const formData = new URLSearchParams(new FormData(form));
             formData.set('_replyto', formData.get('email'));
             formData.set('_template', 'table');
-            formData.set('selected_appointment', document.getElementById('selected-slot-text').textContent);
+            const selectedAppointment = getSelectedAppointment();
+            if (selectedAppointment) {
+                formData.set('selected_appointment', selectedAppointment);
+            } else {
+                formData.delete('selected_appointment');
+            }
 
             errorMessage.classList.add('hidden');
             submitButton.disabled = true;
@@ -870,7 +887,8 @@
         }
 
         document.addEventListener('click', (event) => {
-            const target = event.target.closest('[data-language], [data-open-modal], [data-urgency], [data-day], [data-time], [data-action]');
+            const clickedElement = event.target instanceof Element ? event.target : null;
+            const target = clickedElement?.closest('[data-language], [data-open-modal], [data-urgency], [data-day], [data-time], [data-action]');
             if (!target) return;
 
             if (target.dataset.language) {
@@ -895,16 +913,31 @@
             }
         });
 
-        document.getElementById('estimation').addEventListener('change', (event) => {
+        document.getElementById('estimation')?.addEventListener('change', (event) => {
             if (event.target.matches('select, input[type="checkbox"]')) {
                 calculateEstimate();
             }
         });
 
-        document.getElementById('contact-form').addEventListener('submit', handleFormSubmit);
+        document.getElementById('contact-form')?.addEventListener('submit', handleFormSubmit);
 
-        // Initialize the booking dates and calculation on page load
-        window.onload = function() {
+        // Initialize once the DOM is available without relying on window.onload.
+        let pageInitialized = false;
+        function initializePage() {
+            if (pageInitialized) return;
+            pageInitialized = true;
+
             renderDaySelector();
+            document.querySelectorAll('.time-btn').forEach(btn => {
+                btn.type = 'button';
+                btn.setAttribute('aria-pressed', String(btn.dataset.time === selectedTime));
+            });
             calculateEstimate();
-        };
+            updateSlotText();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializePage, { once: true });
+        } else {
+            initializePage();
+        }
