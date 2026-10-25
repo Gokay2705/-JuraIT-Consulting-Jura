@@ -145,6 +145,10 @@
                 info_email_title: "E-mail & Contact",
                 info_phone_title: "Téléphone Support",
                 footer_desc: "Accompagnement data pour les PME : intégration, pipelines, plateformes analytiques et qualité des données.",
+                signature_label: "Votre partenaire data dans le Jura",
+                signature_role: "Data Engineering pour les PME",
+                signature_cta: "Parlons de votre projet",
+                signature_tagline: "Des données fiables. Des décisions plus claires."
                 footer_zone_title: "Zone d'Intervention",
                 footer_legal_title: "Informations Légales",
                 footer_privacy: "Politique de Confidentialité",
@@ -295,6 +299,10 @@
                 info_email_title: "E-Mail & Kontakt",
                 info_phone_title: "Support Telefon",
                 footer_desc: "Data Engineering für KMU: Integration, Pipelines, Analyseplattformen und Datenqualität.",
+                signature_label: "Ihr Data-Partner im Jura",
+                signature_role: "Data Engineering für KMU",
+                signature_cta: "Sprechen wir über Ihr Projekt",
+                signature_tagline: "Verlässliche Daten. Klarere Entscheidungen."
                 footer_zone_title: "Einsatzgebiet",
                 footer_legal_title: "Rechtliche Informationen",
                 footer_privacy: "Datenschutzerklärung",
@@ -445,6 +453,10 @@
                 info_email_title: "Email & Contact",
                 info_phone_title: "Support Hotline",
                 footer_desc: "Data engineering for SMEs: integration, pipelines, analytics platforms, and data quality.",
+                signature_label: "Your data partner in Jura",
+                signature_role: "Data Engineering for SMEs",
+                signature_cta: "Let’s talk about your project",
+                signature_tagline: "Reliable data. Clearer decisions."
                 footer_zone_title: "Service Area",
                 footer_legal_title: "Legal Information",
                 footer_privacy: "Privacy Policy",
