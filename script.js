@@ -148,7 +148,7 @@
                 signature_label: "Votre partenaire data dans le Jura",
                 signature_role: "Data Engineering pour les PME",
                 signature_cta: "Parlons de votre projet",
-                signature_tagline: "Des données fiables. Des décisions plus claires."
+                signature_tagline: "Des données fiables. Des décisions plus claires.",
                 footer_zone_title: "Zone d'Intervention",
                 footer_legal_title: "Informations Légales",
                 footer_privacy: "Politique de Confidentialité",
@@ -302,7 +302,7 @@
                 signature_label: "Ihr Data-Partner im Jura",
                 signature_role: "Data Engineering für KMU",
                 signature_cta: "Sprechen wir über Ihr Projekt",
-                signature_tagline: "Verlässliche Daten. Klarere Entscheidungen."
+                signature_tagline: "Verlässliche Daten. Klarere Entscheidungen.",
                 footer_zone_title: "Einsatzgebiet",
                 footer_legal_title: "Rechtliche Informationen",
                 footer_privacy: "Datenschutzerklärung",
@@ -456,7 +456,7 @@
                 signature_label: "Your data partner in Jura",
                 signature_role: "Data Engineering for SMEs",
                 signature_cta: "Let’s talk about your project",
-                signature_tagline: "Reliable data. Clearer decisions."
+                signature_tagline: "Reliable data. Clearer decisions.",
                 footer_zone_title: "Service Area",
                 footer_legal_title: "Legal Information",
                 footer_privacy: "Privacy Policy",
