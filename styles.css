@@ -52,3 +52,112 @@
                 min-width: 0;
             }
         }
+/* Compact company signature inspired by the supplied reference */
+.signature-card {
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    border-radius: 1.5rem;
+    background: #fff;
+    box-shadow: 0 18px 45px rgba(15, 25, 44, 0.08);
+}
+.signature-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem 2.25rem;
+}
+.signature-copy { min-width: 0; }
+.signature-label {
+    margin: 0 0 .55rem;
+    color: #0f8b8d;
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-align: left;
+    text-transform: uppercase;
+}
+.signature-name {
+    margin: 0;
+    color: #0b192c;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    text-align: left;
+}
+.signature-role {
+    margin: .25rem 0 1.1rem;
+    color: #475569;
+    font-size: .92rem;
+    text-align: left;
+}
+.signature-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .65rem 1.15rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.signature-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    color: #334155;
+    font-size: .8rem;
+    text-decoration: none;
+    transition: color .2s ease;
+}
+.signature-link i { color: #0f8b8d; }
+.signature-link:hover, .signature-link:focus-visible { color: #0f8b8d; }
+.signature-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .9rem;
+}
+.signature-seal {
+    display: grid;
+    width: 5.25rem;
+    height: 5.25rem;
+    place-items: center;
+    border: 4px solid #ccfbf1;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #0f8b8d, #0b192c);
+    box-shadow: 0 8px 20px rgba(15, 139, 141, .2);
+    color: #fff;
+}
+.signature-seal span { font-size: 2rem; font-weight: 800; }
+.signature-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .55rem;
+    border-radius: .75rem;
+    background: #0f8b8d;
+    padding: .7rem .9rem;
+    color: #fff;
+    font-size: .76rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background .2s ease, transform .2s ease;
+}
+.signature-cta:hover, .signature-cta:focus-visible {
+    transform: translateY(-1px);
+    background: #0b6f72;
+}
+.signature-tagline {
+    margin: 0;
+    border-top: 1px solid #e2e8f0;
+    padding: 1rem 2.25rem;
+    color: #475569;
+    font-size: .82rem;
+    text-align: left;
+    hyphens: none;
+}
+@media (max-width: 639px) {
+    .signature-main { grid-template-columns: 1fr; gap: 1.4rem; padding: 1.5rem; }
+    .signature-contact { flex-direction: column; gap: .6rem; }
+    .signature-brand { flex-direction: row; justify-content: space-between; }
+    .signature-tagline { padding: .9rem 1.5rem; }
+}
