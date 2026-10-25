@@ -837,52 +837,33 @@
             selectedSlot.textContent = getSelectedAppointment() || '—';
         }
 
-        // Contact Form Submission Handler
-        async function handleFormSubmit(e) {
-            e.preventDefault();
+        // FormSubmit autoresponses are disabled for AJAX submissions, so prepare
+        // the language-specific reply and let the browser submit the form normally.
+        function handleFormSubmit() {
             const form = document.getElementById('contact-form');
-            const successBox = document.getElementById('form-success');
-            const errorMessage = document.getElementById('form-error');
-            const submitButton = form.querySelector('[type="submit"]');
-            const submitLabel = submitButton.querySelector('[data-i18n="form_submit"]');
-            const submitText = submitLabel.textContent;
-            const formData = new URLSearchParams(new FormData(form));
-            formData.set('_replyto', formData.get('email'));
-            formData.set('_template', 'table');
+            const email = form.elements.email.value.trim();
             const selectedAppointment = getSelectedAppointment();
+            const signature = {
+                fr: `JuraIT Consulting\nData Engineering pour les PME\n+41 77 976 2663\nsupport@jurait.ch\nwww.jurait.ch\nDes données fiables. Des décisions plus claires.`,
+                de: `JuraIT Consulting\nData Engineering für KMU\n+41 77 976 2663\nsupport@jurait.ch\nwww.jurait.ch\nZuverlässige Daten. Klarere Entscheidungen.`,
+                en: `JuraIT Consulting\nData Engineering for SMEs\n+41 77 976 2663\nsupport@jurait.ch\nwww.jurait.ch\nReliable data. Clearer decisions.`
+            }[currentLang];
+
+            form.elements._replyto.value = email;
+            form.elements._autoresponse.value = `${i18n[currentLang].success_msg}\n\n${signature}`;
+            form.elements._next.value = `https://www.jurait.ch/?submitted=${encodeURIComponent(currentLang)}#rdv-section`;
+
             if (selectedAppointment) {
-                formData.set('selected_appointment', selectedAppointment);
-            } else {
-                formData.delete('selected_appointment');
-            }
-
-            errorMessage.classList.add('hidden');
-            submitButton.disabled = true;
-            submitLabel.textContent = i18n[currentLang].form_sending;
-
-            try {
-                const response = await fetch('https://formsubmit.co/ajax/mustafa@jurait.ch', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Accept': 'application/json'
-                    },
-                    body: formData.toString()
-                });
-                const result = await response.json();
-
-                if (!response.ok || result.success !== 'true' && result.success !== true) {
-                    throw new Error(result.message || `Form submission failed (${response.status})`);
+                let appointmentField = form.elements.selected_appointment;
+                if (!appointmentField) {
+                    appointmentField = document.createElement('input');
+                    appointmentField.type = 'hidden';
+                    appointmentField.name = 'selected_appointment';
+                    form.appendChild(appointmentField);
                 }
-
-                form.classList.add('hidden');
-                successBox.classList.remove('hidden');
-            } catch (error) {
-                console.error('Contact form submission failed:', error);
-                errorMessage.classList.remove('hidden');
-            } finally {
-                submitButton.disabled = false;
-                submitLabel.textContent = submitText;
+                appointmentField.value = selectedAppointment;
+            } else {
+                form.querySelector('[name="selected_appointment"]')?.remove();
             }
         }
 
@@ -934,6 +915,13 @@
             });
             calculateEstimate();
             updateSlotText();
+
+            const submittedLanguage = new URLSearchParams(window.location.search).get('submitted');
+            if (submittedLanguage && i18n[submittedLanguage]) {
+                changeLanguage(submittedLanguage);
+                document.getElementById('contact-form')?.classList.add('hidden');
+                document.getElementById('form-success')?.classList.remove('hidden');
+            }
         }
 
         if (document.readyState === 'loading') {
