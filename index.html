@@ -580,26 +580,8 @@
                         <span data-i18n="picker_title">Sélectionner un créneau (Visio ou Sur Site)</span>
                     </h3>
 
-                    <!-- Day Selector -->
-                    <div class="grid grid-cols-4 gap-2 mb-6" id="day-selector">
-                        <button data-day="Jeu 15 Oct" class="day-btn py-3 rounded-xl border border-slate-700 bg-slate-900 text-center hover:border-brand-teal transition-all">
-                            <span class="block text-[10px] text-slate-400 uppercase">Jeu</span>
-                            <span class="block text-sm font-bold text-white">15 Oct</span>
-                        </button>
-                        <button data-day="Ven 16 Oct" class="day-btn py-3 rounded-xl border border-brand-teal bg-brand-teal/20 text-center transition-all">
-                            <span class="block text-[10px] text-brand-teal font-bold uppercase">Ven</span>
-                            <span class="block text-sm font-bold text-white">16 Oct</span>
-                        </button>
-                        <button data-day="Lun 19 Oct" class="day-btn py-3 rounded-xl border border-slate-700 bg-slate-900 text-center hover:border-brand-teal transition-all">
-                            <span class="block text-[10px] text-slate-400 uppercase">Lun</span>
-                            <span class="block text-sm font-bold text-white">19 Oct</span>
-                        </button>
-                        <button data-day="Mar 20 Oct" class="day-btn py-3 rounded-xl border border-slate-700 bg-slate-900 text-center hover:border-brand-teal transition-all">
-                            <span class="block text-[10px] text-slate-400 uppercase">Mar</span>
-                            <span class="block text-sm font-bold text-white">20 Oct</span>
-                        </button>
-                    </div>
-
+                    <!-- Day Selector: dates are generated for the next available business days -->
+                    <div class="grid grid-cols-4 gap-2 mb-6" id="day-selector" aria-live="polite"></div>
                     <!-- Time Slots -->
                     <div class="space-y-2 mb-6">
                         <label class="block text-xs font-semibold text-slate-400 mb-2" data-i18n="picker_hours">Heures disponibles :</label>
@@ -615,7 +597,7 @@
                     <div class="bg-slate-900 p-4 rounded-xl border border-slate-700/60 text-xs space-y-1">
                         <div class="flex justify-between text-slate-300">
                             <span data-i18n="slot_selected_label">Créneau sélectionné :</span>
-                            <span id="selected-slot-text" class="font-bold text-brand-teal">Ven 16 Oct à 10:30</span>
+                            <span id="selected-slot-text" class="font-bold text-brand-teal">—</span>
                         </div>
                         <div class="text-slate-400 text-[11px]" data-i18n="slot_format_info">Format: Consultation en visioconférence ou à votre bureau.</div>
                     </div>
